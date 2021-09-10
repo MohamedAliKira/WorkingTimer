@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WorkingTimer.Shared
 {
-    public class RegisterRequest
+    public class LoginRequest
     {
         [Required]
         [StringLength(25)]
@@ -17,9 +17,5 @@ namespace WorkingTimer.Shared
         [Required]
         [StringLength(25, MinimumLength = 6)]
         public string Password { get; set; }
-
-        [Required]
-        [StringLength(25, MinimumLength = 6)]
-        public string ConfirmPassword { get; set; }
     }
 }

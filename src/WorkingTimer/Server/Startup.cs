@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Linq;
 using System.Text;
 using WorkingTimer.Server.Models;
+using WorkingTimer.Server.Services;
 
 namespace WorkingTimer.Server
 {
@@ -52,15 +53,17 @@ namespace WorkingTimer.Server
             {
                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
-                    ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidIssuer = "",
-                    ValidAudience = "",
+                    ValidateIssuer = true,
+                    ValidAudience = Configuration["AuthSettings:Audience"],
+                    ValidIssuer = Configuration["AuthSettings:Issuer"],
                     RequireExpirationTime = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("")),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["AuthSettings:Key"])),
                     ValidateIssuerSigningKey = true
                 };
             });
+
+            services.AddScoped<IUserManagerService, UserManagerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
