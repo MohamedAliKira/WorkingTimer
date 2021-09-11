@@ -64,6 +64,7 @@ namespace WorkingTimer.Server
             });
 
             services.AddScoped<IUserManagerService, UserManagerService>();
+            services.AddTransient<IMailService, MailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

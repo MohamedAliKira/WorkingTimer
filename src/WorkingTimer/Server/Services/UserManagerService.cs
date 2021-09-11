@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -15,18 +16,21 @@ namespace WorkingTimer.Server.Services
     public interface IUserManagerService
     {
         Task<UserManagerResponse> RegisterUseAsync(RegisterRequest model);
-        Task<UserManagerResponse> LoginUseAsync(LoginRequest model);
+        Task<UserManagerResponse> LoginUserAsync(LoginRequest model);
+        Task<UserManagerResponse> ConfirmEmailAsync(string userId,string token);
     }
 
     public class UserManagerService : IUserManagerService
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _configuration;
+        private readonly IMailService _mailService;
 
-        public UserManagerService(UserManager<IdentityUser> userManager, IConfiguration configuration)
+        public UserManagerService(UserManager<IdentityUser> userManager, IConfiguration configuration, IMailService mailService)
         {
             _userManager = userManager;
             _configuration = configuration;
+            _mailService = mailService;
         }
 
         public async Task<UserManagerResponse> RegisterUseAsync(RegisterRequest model)
@@ -52,6 +56,15 @@ namespace WorkingTimer.Server.Services
             if(result.Succeeded)
             {
                 //TODO: send a confirmation Email
+                var confirmEmailToken = await _userManager.GenerateEmailConfirmationTokenAsync(identityUser);
+                var encodedEmailToken = Encoding.UTF8.GetBytes(confirmEmailToken);
+                var validEmailToken = WebEncoders.Base64UrlEncode(encodedEmailToken);
+
+                string url = $"{_configuration["AppUrl"]}/api/auth/confirmemail?userId={identityUser.Id}&token={validEmailToken}";
+                await _mailService.SendEmailAsync(identityUser.Email, "Confirm your email",
+                    "<h1>Welcome to WorkingTimer</h1>" +
+                    $"<p>Please confirm your email by <a href='{url}'> clicking here</a> </p>");
+
                 return new UserManagerResponse
                 {
                     Message = "User created successfully",
@@ -67,7 +80,7 @@ namespace WorkingTimer.Server.Services
             };
         }
 
-        public async Task<UserManagerResponse> LoginUseAsync(LoginRequest model)
+        public async Task<UserManagerResponse> LoginUserAsync(LoginRequest model)
         {
             if (model == null)
                 throw new NullReferenceException("Login Model is null");
@@ -115,6 +128,36 @@ namespace WorkingTimer.Server.Services
                 Message = tokenAsString,
                 IsSuccess = true,
                 ExpireDate = token.ValidTo
+            };
+        }
+
+        public async Task<UserManagerResponse> ConfirmEmailAsync(string userId, string token)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return new UserManagerResponse
+                {
+                    Message = "User Not found",
+                    IsSuccess = false
+                };
+
+            var decodedToken = WebEncoders.Base64UrlDecode(token);
+            string normalToken = Encoding.UTF8.GetString(decodedToken);
+
+            var result = await _userManager.ConfirmEmailAsync(user, normalToken);
+
+            if(result.Succeeded)
+                return new UserManagerResponse
+                {
+                    Message = "Email confirmed successfully",
+                    IsSuccess = true
+                };
+
+            return new UserManagerResponse
+            {
+                Message = "Email did not confirm",
+                IsSuccess = false,
+                Errors = result.Errors.Select(e => e.Description)
             };
         }
     }
