@@ -1,0 +1,156 @@
+﻿header{
+    padding: 20px;
+}
+
+.login-button {
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+    width: 180px;
+    border-radius: 4px;
+    padding: 8px 10px;
+    border: 1px solid #3b3a39;
+    color: #3b3a39;
+    background-color: white;
+    text-align:center;
+}
+
+.login-button:hover {
+    text-decoration:none;
+    color: #3b3a39;
+}
+
+.login-button img {
+    width: 36px;
+}
+
+
+.shadow-effect:hover {
+    transition: 0.3s;
+    -webkit-box-shadow: 0px 4px 15px -6px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 4px 15px -6px rgba(0,0,0,0.75);
+    box-shadow: 0px 4px 15px -6px rgba(0,0,0,0.75);
+}
+
+/* Calender Style */
+.calender {
+    padding:10px;
+
+}
+
+.calender-table {
+    margin: 10px;
+    width: 100%;
+    background-color: #d2d0ce; /*#f3f2f1;*/
+    text-align: center;
+}
+
+.calender-table thead {
+    background-color: #f3f2f1;
+}
+
+.calender-table td{
+    padding: 2px;
+}
+
+.calender-table .day {
+    width: 125px;
+    height: 100px;
+    min-width: 125px;
+    margin: 2px;
+    border-radius: 5px;
+    background-color: white;
+    padding: 5px;
+    cursor: pointer;
+}
+
+@media (max-width: 900px){
+    .calender-table .day {
+        width: 100px;
+        height: 50px;
+        min-width: auto;
+    }
+
+    .day .day-event{
+        display:none;
+    }
+}
+
+.current-day {
+    border: 2px solid #0078d4;
+    color: #0078d4;
+}
+
+.selected-day {
+    border: 2px solid #004578;
+    color: #004578;
+    background-color: #c7e0f4 !important;
+}
+
+.day .day-event {
+    font-size: 12px;
+    padding: 5px; 
+}
+
+/* COLOR */
+.c-weekend {
+    background-color: #605e5c !important;
+    color: white;
+}
+
+.c-red {
+    color: white;
+    background-color: #d13438 !important;
+}
+
+.c-green {
+    color: white;
+    background-color: #107c10 !important;
+}
+
+.c-yellow {
+    color: black;
+    background-color: #fff100 !important;
+}
+
+
+.information-globale {
+    min-height: 150px;
+    width: 100%;
+    margin: 20px 10px 20px 10px;
+    padding: 5px 10px;
+    text-align: center;
+    vertical-align: central;
+    justify-content: center;
+    justify-items: center;
+    display: block;
+    border: none;
+    background-color: #0078d4;
+    font-size: 20px;
+    font-weight: 100;
+    color: white;
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.36);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.36);
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.36);
+}
+
+.information-mensuel {
+    min-height: 150px;
+    width: 100%;
+    margin: 20px 10px 20px 10px;
+    padding: 5px 10px;
+    text-align: center;
+    vertical-align: central;
+    justify-content: center;
+    justify-items: center;
+    display: block;
+    border: none;
+    background-color: #6f42c1;
+    font-size: 20px;
+    font-weight: 100;
+    color: white;
+    margin-top: 10px;
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.36);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.36);
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.36);
+}
