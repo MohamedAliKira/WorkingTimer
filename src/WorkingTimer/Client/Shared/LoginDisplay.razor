@@ -1,0 +1,14 @@
+﻿ <AuthorizeView>
+     <NotAuthorized>
+        <a href="#" class="btn-info">
+            <i class="oi oi-person"></i> &nbsp;inscription
+        </a>
+     </NotAuthorized>
+     <Authorized>
+         <p>Bienvenue @context.User.FindFirst(System.Security.Claims.ClaimTypes.GivenName).Value !</p>
+     </Authorized>
+ </AuthorizeView>
+
+@code {
+
+}
