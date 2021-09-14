@@ -1,0 +1,29 @@
+﻿@page "/authentication/login"
+
+<MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" 
+               Disabled="_isMudViewEnabled" 
+               OnClick="setMudView"
+               Color="Color.Secondary"></MudIconButton>
+
+<MudIconButton Icon="@Icons.Material.Filled.FormatBold" 
+               Disabled="@(!_isMudViewEnabled)" 
+               OnClick="setBooststrapView" 
+               Color="Color.Secondary"></MudIconButton>
+
+
+
+@if (_isMudViewEnabled)
+{
+    <LoginForm_Mud />
+}
+else
+{
+    <LoginForm />
+
+}
+@code {
+
+    private bool _isMudViewEnabled = true;
+    private void setMudView() => _isMudViewEnabled = true;
+    private void setBooststrapView() => _isMudViewEnabled = false;
+}

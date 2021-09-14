@@ -10,7 +10,7 @@ using WorkingTimer.Shared;
 
 namespace WorkingTimer.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -25,7 +25,7 @@ namespace WorkingTimer.Server.Controllers
             _configuration = configuration;
         }
 
-        // api/auth/register
+        // auth/register
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest model)
         {
@@ -34,8 +34,6 @@ namespace WorkingTimer.Server.Controllers
                 var result = await _userManagerService.RegisterUseAsync(model);
                 if (result.IsSuccess)
                 {
-                    await _mailService.SendEmailAsync(model.Email, "New Register", $"<h1>Welcome to Working Timer; the register has benn succeefully</h1>" +
-                                                                                    $"<p>Register at : {DateTime.Now}</p>");
                     return Ok(result); // status code : 200
                 }
                 else
@@ -45,7 +43,7 @@ namespace WorkingTimer.Server.Controllers
             return BadRequest("Some properties are not valid");  // status code : 400
         }
 
-        // api/auth/login
+        // auth/login
         [HttpPost("Login")]
         public async Task<IActionResult> LoginAsync([FromBody] LoginRequest model)
         {
@@ -54,9 +52,7 @@ namespace WorkingTimer.Server.Controllers
                 var result = await _userManagerService.LoginUserAsync(model);
                 if (result.IsSuccess)
                 {
-                    await _mailService.SendEmailAsync(model.Email, "New Login", $"<h1>Hey! new login to your account notifed</h1>" +
-                            $"<p>New Login to your account at : {DateTime.Now}</p>");
-                    return Ok(result); // status code : 200
+                   return Ok(result); // status code : 200
                 }
                 else
                     return BadRequest(result); // status code : 400
@@ -65,7 +61,7 @@ namespace WorkingTimer.Server.Controllers
             return BadRequest("Some properties are not valid");  // status code : 400
         }
 
-        // api/auth/confirmEmail?userId&token
+        // auth/confirmEmail?userId&token
         [HttpGet("confirmEmail")]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
@@ -76,7 +72,7 @@ namespace WorkingTimer.Server.Controllers
 
             if (result.IsSuccess) 
             {
-                return Redirect($"{_configuration["AppUrl"]}/ConfimEmail.html");
+                return Redirect($"{_configuration["AppUrl"]}/ConfirmEmail.html");
             }
 
             return BadRequest(result);

@@ -10,7 +10,7 @@ namespace WorkingTimer.Shared
     public class RegisterRequest
     {
         [Required]
-        [StringLength(25)]
+        [StringLength(50)]
         [EmailAddress]
         public string Email { get; set; }
 

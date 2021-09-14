@@ -20,7 +20,7 @@ namespace WorkingTimer.Client
                 var token = await _storage.GetItemAsStringAsync("access_token");
                 request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             }
-            Console.WriteLine("Authorization Message Handler Called");
+            //Console.WriteLine("Authorization Message Handler Called");
             return await base.SendAsync(request, cancellationToken);
         }
     }

@@ -39,6 +39,7 @@ namespace WorkingTimer.Server
 
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
+                options.SignIn.RequireConfirmedEmail = true;
                 options.Password.RequireDigit = true;
                 options.Password.RequiredLength = 6;
                 options.Password.RequireLowercase = true;

@@ -1,0 +1,41 @@
+﻿@namespace WorkingTimer.Client.Components
+
+    <div class="d-flex justify-content-between m-3 p-3">
+        <div>
+        </div>
+        <div class="card-auth">
+            <h3 class="text-center">Bienvenue dans l'application "Working Timer!"</h3><br />
+            <EditForm Model="_model" OnValidSubmit="LoginUserAsync">
+                <DataAnnotationsValidator />
+
+                <div class="form-group row">
+                    <label for="Email" class="col-sm-12 col-md-2 col-form-label">Email</label>
+                    <div class="col-sm-12 col-md-10">
+                        <InputText @bind-Value=_model.Email class="form-control" id="Email" />
+                        <ValidationMessage For="@(()=>_model.Email)" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="Password" class="col-sm-12 col-md-2 col-form-label">Password</label>
+                    <div class="col-sm-12 col-md-10">
+                        <InputText @bind-Value=_model.Password type="password" class="form-control" id="Password" />
+                        <ValidationMessage For="@(()=>_model.Password)" />
+                    </div>
+                </div>
+                @if(_isBusy)
+                {
+                    <div class="spinner-border text-danger"></div>
+                }
+                else
+                {
+                    <input type="submit" class="btn btn-primary" value="Connexion"/>
+                }
+
+            </EditForm>
+            <br />
+            <p class="alert-danger">@_errorMessage</p>
+        </div> 
+        
+        <div>
+        </div>
+    </div>

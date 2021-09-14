@@ -60,14 +60,14 @@ namespace WorkingTimer.Server.Services
                 var encodedEmailToken = Encoding.UTF8.GetBytes(confirmEmailToken);
                 var validEmailToken = WebEncoders.Base64UrlEncode(encodedEmailToken);
 
-                string url = $"{_configuration["AppUrl"]}/api/auth/confirmemail?userId={identityUser.Id}&token={validEmailToken}";
-                await _mailService.SendEmailAsync(identityUser.Email, "Confirm your email",
-                    "<h1>Welcome to WorkingTimer</h1>" +
-                    $"<p>Please confirm your email by <a href='{url}'> clicking here</a> </p>");
+                string url = $"{_configuration["AppUrl"]}/auth/confirmemail?userId={identityUser.Id}&token={validEmailToken}";
+                //await _mailService.SendEmailAsync(identityUser.Email, "Confirm your email",
+                //    "<h1>Welcome to WorkingTimer</h1>" +
+                //    $"<p>Please confirm your email by <a href='{url}'> clicking here</a> </p>");
 
                 return new UserManagerResponse
                 {
-                    Message = "User created successfully",
+                    Message = "User created successfully |" + url,
                     IsSuccess = true,
                 };
             }
@@ -105,9 +105,19 @@ namespace WorkingTimer.Server.Services
                 };
             }
 
+            var confirmedEmail = await _userManager.IsEmailConfirmedAsync(user);
+            if(!confirmedEmail)
+            {
+                return new UserManagerResponse
+                {
+                    Message = "Email not confirmed",
+                    IsSuccess = false
+                };
+            }
+
             var claims = new[]
             {
-                new Claim("Email", model.Email),
+                new Claim(ClaimTypes.Email, model.Email),
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
             };
 

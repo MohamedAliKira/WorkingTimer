@@ -10,12 +10,13 @@ namespace WorkingTimer.Shared
     public class LoginRequest
     {
         [Required]
-        [StringLength(25)]
+        [StringLength(50)]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         [StringLength(25, MinimumLength = 6)]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
     }
 }

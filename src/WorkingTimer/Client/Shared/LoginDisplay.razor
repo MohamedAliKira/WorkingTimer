@@ -1,14 +1,31 @@
-﻿ <AuthorizeView>
-     <NotAuthorized>
-        <a href="#" class="btn-info">
+﻿@inject NavigationManager NavigationManager
+@inject Blazored.LocalStorage.ILocalStorageService Storage
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<AuthorizeView>
+    <NotAuthorized>
+        <a href="/authentication/Register" class="btn btn-outline-dark">
             <i class="oi oi-person"></i> &nbsp;inscription
         </a>
-     </NotAuthorized>
-     <Authorized>
-         <p>Bienvenue @context.User.FindFirst(System.Security.Claims.ClaimTypes.GivenName).Value !</p>
-     </Authorized>
- </AuthorizeView>
+    </NotAuthorized>
+    <Authorized>
+        <button @onclick="LogoutAsync" class="btn btn-outline-success" title="Log Out">
+            Bienvenue @context.User.FindFirst(System.Security.Claims.ClaimTypes.Email).Value !
+        </button>
+    </Authorized>
+</AuthorizeView>
 
 @code {
+
+    private async Task LogoutAsync()
+    {
+        await Storage.RemoveItemAsync("access_token");
+        await Storage.RemoveItemAsync("expiry_date");
+
+        await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+        NavigationManager.NavigateTo("/authentication/login");
+
+    }
 
 }
