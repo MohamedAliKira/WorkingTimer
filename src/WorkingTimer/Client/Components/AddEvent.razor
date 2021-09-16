@@ -6,30 +6,32 @@
             <h5 class="blazor-modal-title">@selectedDay.Date.ToString("D")</h5>
             <span class="blazor-modal-close-button" @onclick="() => IsOpened = false">X</span>
         </div>
-        <MudCard>
-            <EditForm Model="events" OnValidSubmit="AddEventTimer">
-                <div class="blazor-modal-body">
-                    <MudCardContent>
-
-                        <MudTimePicker Label="24 hours" @bind-Time="events.StartTime" />
-                        <MudTimePicker Label="24 hours" @bind-Time="events.EndTime" />
-                        <div class="d-flex">
-                            <MudRadioGroup @bind-SelectedOption="events.Subject">
-                                <MudRadio Option="@("")">Ordinaire</MudRadio>
-                                <MudRadio Option="@("Mission")" Color="Color.Primary">Mission</MudRadio>
-                                <MudRadio Option="@("Ferier")" Color="Color.Secondary">chômée et payée</MudRadio>
-                            </MudRadioGroup>
-                        </div>
-
-                    </MudCardContent>
+        <EditForm Model="model" OnValidSubmit="AddEventTimer">
+            <div class="blazor-modal-body">
+                <MudRadioGroup @bind-SelectedOption="model.Subject" Class="mud-text-align-center my-auto">
+                    <MudRadio Option="@("T")" Color="Color.Primary">Ordinaire</MudRadio>
+                    <MudRadio Option="@("Férier")" Color="Color.Primary">Chomée et payée</MudRadio>
+                    <MudRadio Option="@("Mission")" Color="Color.Primary">Mission</MudRadio>
+                </MudRadioGroup>
+                <div class="form-group row">
+                    <span class="col-sm-12 col-md-2">Arriver :</span>
+                    <input type="time" class="form-control col-sm-12 col-md-10" @bind-value="model.StartTime" />
                 </div>
-                <div class="blazor-modal-footer">
-                    <MudCardActions>
-                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
-                                   Disabled="@_isBusy" Class="ml-auto">Enregistrer</MudButton>
-                    </MudCardActions>
+                <div class="form-group row">
+                    <span class="col-sm-12 col-md-2">Départ :</span>
+                    <input type="time" class="form-control col-sm-12 col-md-10" @bind-value="model.EndTime" />
                 </div>
-            </EditForm>
-        </MudCard>
+            </div>
+            <div class="blazor-modal-footer" >
+                @if (_isBusy)
+                {
+                    <div class="spinner-border text-primary"></div>
+                }
+                else
+                {
+                    <button class="btn btn-primary" type="submit">Enregistrer</button>
+                }
+            </div>
+        </EditForm>
     </div>
 </div>

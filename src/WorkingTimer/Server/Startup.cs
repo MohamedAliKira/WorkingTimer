@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -8,8 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using WorkingTimer.Server.Models;
 using WorkingTimer.Server.Services;
@@ -63,9 +66,23 @@ namespace WorkingTimer.Server
                     ValidateIssuerSigningKey = true
                 };
             });
+            // Configure the identity options for the logged in user 
+            services.AddScoped(sp =>
+            {
+                var identityOptions = new Options.IdentityOptions();
+                var httpContext = sp.GetService<IHttpContextAccessor>().HttpContext;
+                if (httpContext.User.Identity.IsAuthenticated)
+                {
+                    identityOptions. UserId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                    //identityOptions.FirstName = httpContext.User.FindFirst(ClaimTypes.GivenName).Value;
+                    //identityOptions.LastName = httpContext.User.FindFirst(ClaimTypes.Surname).Value;
+                }
+                return identityOptions;
+            });
 
             services.AddScoped<IUserManagerService, UserManagerService>();
             services.AddTransient<IMailService, MailService>();
+            services.AddScoped<IEventsService, EventsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

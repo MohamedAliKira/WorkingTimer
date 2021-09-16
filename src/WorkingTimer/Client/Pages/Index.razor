@@ -16,25 +16,35 @@
 
 <!-- Calender Component-->
 <div class="row">
+    <!--Informations-->
+    <div class="col-sm-12 col-md-12 col-lg-3">
+        <Informations Selected_Day="selected_Day" />
+    </div>
     <!--Calender-->
     <div class="col-sm-12 col-md-12 col-lg-9">
         <Calender Select_Day="Select_Day" />
-        <AddEvent IsOpened="isOpened" selectedDay="selected_Day">
-        </AddEvent>
+        <AddEvent IsOpened="isOpened" selectedDay="selected_Day" />
     </div>
-    <!--Informations-->
-    <div class="col-sm-12 col-md-12 col-lg-3">
-        <Informations />
-    </div>
+
 </div>
 
 @code {
     private CalendarDay selected_Day = new CalendarDay { Date = DateTime.Now };
-    bool isOpened = false;
+    private bool isOpened = false;
 
     void Select_Day(CalendarDay receivedDay)
     {
         selected_Day = receivedDay;
-        isOpened = true;
+        isOpened = !receivedDay.IsEmpty;
+    }
+
+    protected override void OnInitialized()
+    {
+        AddEvent.OnEventAdd += () =>
+        {
+            StateHasChanged();
+            isOpened = false;
+        };
+
     }
 }

@@ -62,9 +62,66 @@
 
 .blazor-modal-body {
     padding: 10px;
+    width: 90%;
+    margin : 5px;
 }
 
 .blazor-modal-footer {
     background-color: purple;
-    padding: 10px;
+    padding: 10px;    
+}
+
+@media (max-width: 900px) {
+    .blazor-modal {
+        position: absolute;
+    }
+    .blazor-modal-content {
+        width: 90%;
+        margin: auto;
+        margin-top: 100px;
+        background-color: white;
+        border-radius: 20px;
+        -webkit-box-shadow: 6px 4px 38px -21px rgba(0,0,0,0.75);
+        -moz-box-shadow: 6px 4px 38px -21px rgba(0,0,0,0.75);
+        box-shadow: 6px 4px 38px -21px rgba(0,0,0,0.75);
+        overflow: hidden;
+    }
+
+    .blazor-modal-body {
+        padding: 2px;
+        width: 90%;
+        margin: 1px;
+    }
+
+    .blazor-modal-footer {
+        background-color: purple;
+        padding: 2px;
+    }
+}
+
+@media (max-width: 550px) {
+    .blazor-modal {
+        position: absolute;
+    }
+    .blazor-modal-content {
+        width: 90%;
+        margin: auto;
+        margin-top: 0px;
+        background-color: white;
+        border-radius: 20px;
+        -webkit-box-shadow: 6px 4px 38px -21px rgba(0,0,0,0.75);
+        -moz-box-shadow: 6px 4px 38px -21px rgba(0,0,0,0.75);
+        box-shadow: 6px 4px 38px -21px rgba(0,0,0,0.75);
+        overflow: hidden;
+    }
+    .blazor-modal-body {
+        padding: 2px;
+        width: 90%;
+        margin: 1px;
+    }
+
+    .blazor-modal-footer {
+        background-color: purple;
+        padding: 2px;
+    }
 }

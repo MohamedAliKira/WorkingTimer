@@ -56,6 +56,22 @@
                             {
                                 <div class="day shadow-effect @currentDayClass @selectedDayClass" @onclick="() => Select_Day.InvokeAsync(day)">
                                     <h4>@day.DayNumber</h4>
+                                    @if (day.Event != null)
+                                    {
+                                        var DureeTime = DateTime.Parse(day.Event.Duree).TimeOfDay;
+                                        var EventClass = day.Event.Subject == "T" ? DureeTime > TimeSpan.Parse("08:00") ? "c-green" : "c-red" :
+                                                    day.Event.Subject == "Mission" ? "c-magenta" : "c-yellow";
+                                        <div class="day-event @EventClass">
+                                            @if (day.Event.Subject != "T")
+                                            {
+                                                @(day.Event.Subject)
+                                            }
+                                            else
+                                            {
+                                                @(day.Event.Duree)
+                                            }
+                                        </div>
+                                    }
                                 </div>
                             }
 

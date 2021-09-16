@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WorkingTimer.Shared;
 
 namespace WorkingTimer.Server.Models
 {
@@ -13,5 +14,7 @@ namespace WorkingTimer.Server.Models
         {
 
         }
+
+        public DbSet<CalenderEvents> Events { get; set; }
     }
 }

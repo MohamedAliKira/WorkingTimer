@@ -12,6 +12,6 @@ namespace WorkingTimer.Shared
         public DateTime Date { get; set; }
         public bool IsEmpty { get; set; }
 
-        public CalenderEvents Event { get; set; }
+        public CalenderEvents Event { get; set; } 
     }
 }

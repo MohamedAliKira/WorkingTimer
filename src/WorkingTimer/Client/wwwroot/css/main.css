@@ -1,4 +1,8 @@
-﻿header{
+﻿app {
+    width: 99%;
+}
+
+header{
     padding: 20px;
 }
 
@@ -30,6 +34,9 @@
     -webkit-box-shadow: 0px 4px 15px -6px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 4px 15px -6px rgba(0,0,0,0.75);
     box-shadow: 0px 4px 15px -6px rgba(0,0,0,0.75);
+    border: 2px solid #004578;
+    color: #004578;
+    background-color: #c7e0f4 !important;
 }
 
 /* Calender Style */
@@ -69,11 +76,28 @@
         width: 100px;
         height: 50px;
         min-width: auto;
+        margin: 0px;
+    }
+    .calender-table .day h4 {
+        font-size: 1.0rem;
+        margin: 0px;
+        padding: 0px;
+    }
+}
+
+@media (max-width: 550px) {
+    .calender-table .day {
+        width: 50px;
+        height: 50px;
+        min-width: auto;
+        margin: 0px;
     }
 
-    .day .day-event{
-        display:none;
-    }
+        .calender-table .day h4 {
+            font-size: 1.0rem;
+            margin: 0px;
+            padding: 0px;
+        }
 }
 
 .current-day {
@@ -92,15 +116,30 @@
     padding: 5px; 
 }
 
+
+@media (max-width: 900px) {
+    .day .day-event {
+        font-size: 11px;
+        padding: 0px;
+    }
+}
+
+@media (max-width: 550px) {
+    .day .day-event {
+        font-size: 10px;
+        padding: 0px;
+    }
+}
+
 /* COLOR */
-.c-weekend {
-    background-color: #605e5c !important;
+.c-magenta {
+    background-color: #5C005C !important;
     color: white;
 }
 
 .c-red {
     color: white;
-    background-color: #d13438 !important;
+    background-color: #A80000 !important;
 }
 
 .c-green {
@@ -126,7 +165,7 @@
     display: block;
     border: none;
     background-color: #0078d4;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 100;
     color: white;
     -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.36);
@@ -146,7 +185,7 @@
     display: block;
     border: none;
     background-color: #6f42c1;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 100;
     color: white;
     margin-top: 10px;
