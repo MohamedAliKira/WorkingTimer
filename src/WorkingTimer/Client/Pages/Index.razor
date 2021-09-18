@@ -1,5 +1,5 @@
 ﻿@page "/"
-@using WorkingTimer.Shared 
+@using WorkingTimer.Shared
 <!--HeaderPage-->
 <header>
     <h3>Bienvenue dans l'application "Working Timer!"</h3>
@@ -11,39 +11,24 @@
             <p>Veuillez vous identifier pour accéder a votre espace calendrier</p>
             <a href="/authentication/login" class="login-button shadow-effect"> <img src="images/login.png" />&nbsp;&nbsp;Connexion </a>
         </NotAuthorized>
+        <Authorized>
+            <!-- Calender Component-->
+            <div class="row">
+                <Calender />
+            </div>
+        </Authorized>
     </AuthorizeView>
 </header>
 
-<!-- Calender Component-->
-<div class="row">
-    <!--Informations-->
-    <div class="col-sm-12 col-md-12 col-lg-3">
-        <Informations Selected_Day="selected_Day" />
-    </div>
-    <!--Calender-->
-    <div class="col-sm-12 col-md-12 col-lg-9">
-        <Calender Select_Day="Select_Day" />
-        <AddEvent IsOpened="isOpened" selectedDay="selected_Day" />
-    </div>
 
-</div>
 
 @code {
-    private CalendarDay selected_Day = new CalendarDay { Date = DateTime.Now };
-    private bool isOpened = false;
-
-    void Select_Day(CalendarDay receivedDay)
-    {
-        selected_Day = receivedDay;
-        isOpened = !receivedDay.IsEmpty;
-    }
 
     protected override void OnInitialized()
     {
         AddEvent.OnEventAdd += () =>
         {
             StateHasChanged();
-            isOpened = false;
         };
 
     }

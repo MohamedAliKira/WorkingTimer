@@ -14,16 +14,19 @@ namespace WorkingTimer.Client.Components
 {
     public partial class Calender : ComponentBase
     {
-        [Parameter] public EventCallback<CalendarDay> Select_Day { get; set; }
+        //[Parameter] public EventCallback<CalendarDay> Select_Day { get; set; }
         [Inject] public HttpClient HttpClient { get; set; }
         [Inject] public AuthenticationStateProvider AuthenticationState { get; set; }
-
+        private AddEvent _myPopup;
         private int year = DateTime.Now.Year;
         private int month = DateTime.Now.Month;
-        private List<CalendarDay> days = new List<CalendarDay>();
+        public List<CalendarDay> days = new List<CalendarDay>();
         private int rowsCount = 0;
-        CalendarDay selected_Day = new CalendarDay();
-        private IEnumerable<CalenderEvents> events { get; set; }
+
+        private CalendarDay _jour = new CalendarDay();
+        private bool _isOpened = false;
+
+       private IEnumerable<CalenderEvents> events { get; set; }
 
         async Task SelectMonth(ChangeEventArgs e)
         {
@@ -40,18 +43,12 @@ namespace WorkingTimer.Client.Components
             UpdateCalender();
             await SynEventsToCalender();
         }
-
-
         
-
         void UpdateCalender()
         {
             days = new List<CalendarDay>();
-            Select_Day.InvokeAsync(new CalendarDay { Date = new DateTime(year, month, 1), DayNumber = 1, IsEmpty = true });
-
 
             //Calculate the number of empty date
-
             var firstDayDate = new DateTime(year, month, 1);
             int weekDayNumber = (int)firstDayDate.DayOfWeek;
             int numbersOfEmptyDays = 0;
@@ -78,8 +75,7 @@ namespace WorkingTimer.Client.Components
                 {
                     DayNumber = i + 1,
                     IsEmpty = false,
-                    Date = new DateTime(year, month, i + 1),
-                    //Event = events.FirstOrDefault(e => e.Journee == new DateTime(year, month, i + 1))
+                    Date = new DateTime(year, month, i + 1)
                 });
             }
 
@@ -95,15 +91,12 @@ namespace WorkingTimer.Client.Components
             {
                 StateHasChanged();
             };
-
-            //Console.WriteLine($"Total Rows : { rowsCount} | Number Of Day Empty : {numbersOfEmptyDays} | Month Days : {numberOfDaysInMonth}");
         }
 
         private async Task SynEventsToCalender()
         {
             var user = (await AuthenticationState.GetAuthenticationStateAsync()).User;
             string userId = user.FindFirst(c => c.Type.Contains("nameidentifier"))?.Value;
-            Console.WriteLine($"Timer : {DateTime.Now.ToShortTimeString()}");
 
             events = await HttpClient.GetFromJsonAsync<IEnumerable<CalenderEvents>>($"events/GetEvents?userId={userId}&year={year}&month={month}");
 
@@ -119,5 +112,12 @@ namespace WorkingTimer.Client.Components
                 }
             }
         }
+
+        public void CallPopup(CalendarDay day)
+        {
+            _isOpened = true;
+            _myPopup.Show(day);            
+        }
+       
     }
 }

@@ -105,6 +105,7 @@
     }
     .blazor-modal-content {
         width: 90%;
+        padding: 5px;
         margin: auto;
         margin-top: 0px;
         background-color: white;
@@ -115,9 +116,45 @@
         overflow: hidden;
     }
     .blazor-modal-body {
-        padding: 2px;
+        padding: 15px;
         width: 90%;
-        margin: 1px;
+        margin: 5px;
+    }
+
+    .blazor-modal-footer {
+        background-color: purple;
+        padding: 2px;
+        border-radius: 0px 0px 20px 20px;
+    }
+
+    .blazor-modal-header {
+        border-radius: 20px 20px 0px 0px;
+    }
+}
+
+@media (max-width: 390px) {
+    .blazor-modal {
+        position: absolute;
+    }
+
+    .blazor-modal-content {
+        font-size : 14px;
+        width: 90%;
+        padding: 5px;
+        margin: auto;
+        margin-top: 0px;
+        background-color: white;
+        border-radius: 20px;
+        -webkit-box-shadow: 6px 4px 38px -21px rgba(0,0,0,0.75);
+        -moz-box-shadow: 6px 4px 38px -21px rgba(0,0,0,0.75);
+        box-shadow: 6px 4px 38px -21px rgba(0,0,0,0.75);
+        overflow: hidden;
+    }
+
+    .blazor-modal-body {
+        padding: 15px;
+        width: 90%;
+        margin: 5px;
     }
 
     .blazor-modal-footer {
