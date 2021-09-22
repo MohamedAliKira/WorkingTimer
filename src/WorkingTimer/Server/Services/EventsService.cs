@@ -15,17 +15,18 @@ namespace WorkingTimer.Server.Services
     {
         Task<CalenderEvents> AddEventAsync(CalenderEvents model);
         Task<IEnumerable<CalenderEvents>> GetEventsAsync(string userId, int year, int month);
+        Task<CalenderEvents> UpdateEventAsync(string Id, CalenderEvents model);
     }
 
     public class EventsService : IEventsService
     {
         private readonly ApplicationDbContext _db;
-        private readonly IConfiguration _configuration;
+        //private readonly IConfiguration _configuration;
 
         public EventsService(ApplicationDbContext db, IConfiguration configuration)
         {
             _db = db;
-            _configuration = configuration;
+            //_configuration = configuration;
         }
 
         public async Task<CalenderEvents> AddEventAsync(CalenderEvents model)
@@ -61,6 +62,23 @@ namespace WorkingTimer.Server.Services
                         select p).ToListAsync();
 
             return events;
+        }
+
+        public async Task<CalenderEvents> UpdateEventAsync(string Id, CalenderEvents model)
+        {
+            if(model != null)
+                throw new NullReferenceException("Events Model is null");
+
+            var _event = await _db.Events.FirstOrDefaultAsync(i => i.Id == Id);
+
+            if(_event == null)
+                throw new NullReferenceException($"Events with Id : {Id} is null");
+
+            var eventUpdate = _db.Events.Attach(model);
+            eventUpdate.State = EntityState.Modified;
+            await _db.SaveChangesAsync();
+
+            return eventUpdate.Entity;
         }
     }
 }

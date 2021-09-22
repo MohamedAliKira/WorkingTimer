@@ -1,8 +1,11 @@
 ﻿@namespace WorkingTimer.Client.Components
+
 <!--Informations-->
 <div class="col-sm-12 col-md-12 col-lg-3">
+    <NewEvent SelectedDay="selectedDay" />
     <Informations Days="days" />
 </div>
+
 <!--Calender-->
 <div class="col-sm-12 col-md-12 col-lg-9">
     <div class="calender">
@@ -25,7 +28,7 @@
             </div>
             <div class="col-sm-12 col-md-6 col-lg-3">
                 <select class="dropdown-item-text" style="width:100%" @onchange="SelectYear">
-                    @for (int i = DateTime.Now.Year - 2; i <= DateTime.Now.Year; i++)
+                    @for (int i = DateTime.Now.Year; i >= DateTime.Now.Year - 2 ; i++)
                     {
                         <option>@i</option>
                     }
@@ -54,14 +57,16 @@
                             <td>
                                 @{
                                     string currentDayClass = day.Date == DateTime.Now.Date ? "current-day" : "";
+                                    string selectedDayClass = day == selectedDay ? "selected-day" : "";
                                 }
                                 @if (!day.IsEmpty)
                                 {
-                                    <div class="day shadow-effect @currentDayClass" @onclick="() => CallPopup(day)">
+                                    <div class="day shadow-effect @currentDayClass @selectedDayClass" @onclick="() => selectedDay = day">
                                         <h4>@day.DayNumber</h4>
                                         @if (day.Event != null)
                                         {
-                                            var EventClass = day.Event.Subject == "T" ? DateTime.Parse(day.Event.Duree).TimeOfDay >= TimeSpan.Parse("08:00") ? "c-green" : "c-red" :
+                                            var EventClass = day.Event.Subject == "T" ?
+                                                        DateTime.Parse(day.Event.Duree).TimeOfDay >= TimeSpan.Parse("08:00") ? "c-green" : "c-red" :
                                                         day.Event.Subject == "Mission" ? "c-magenta" : "c-yellow";
 
                                             <div class="day-event @EventClass">
@@ -84,6 +89,5 @@
 }
             </tbody>
         </table>
-        <AddEvent @ref="_myPopup" IsOpened="_isOpened" /> 
     </div>
 </div>

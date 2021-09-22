@@ -1,0 +1,43 @@
+﻿
+<div class="information-event">
+    @if (SelectedDay.Event != null)
+    {
+        <EditForm model="SelectedDay.Event" OnValidSubmit="AddEventToSelectedDay">
+            <div class="card-content">
+                <span style="text-decoration:double; font-weight:bolder">@SelectedDay.Date.ToString("D").ToUpper()</span>
+                <select @bind="SelectedDay.Event.Subject" class="form-control m-2">
+                    <option value="T">Ordinaire</option>
+                    <option value="Férier">Chomée & payée</option>
+                    <option value="Mission">Mission</option>
+                </select>
+                <input type="time" class="form-control m-1" @bind-value="SelectedDay.Event.StartTime" />
+                <input type="time" class="form-control m-1" @bind-value="SelectedDay.Event.EndTime" />
+
+            </div>
+
+            <div class="calendar-toolbar">
+                <button class="toolbar-button" type="submit"><i class="oi oi-plus"></i></button>
+            </div>
+        </EditForm>
+    }
+    else
+    {
+        <EditForm model="model" OnValidSubmit="AddEventToSelectedDay">
+            <div class="card-content">
+                <span style="text-decoration:underline; font-weight:bolder">@SelectedDay.Date.ToString("D").ToUpper()</span>
+                <select @bind="model.Subject" class="form-control m-1">
+                    <option value="T">Ordinaire</option>
+                    <option value="Férier">Chomée & payée</option>
+                    <option value="Mission">Mission</option>
+                </select>
+                <input type="time" class="form-control m-1" @bind-value="model.StartTime" />
+                <input type="time" class="form-control m-1" @bind-value="model.EndTime" />
+
+            </div>
+
+            <div class="calendar-toolbar">
+                <button class="toolbar-button" type="submit"><i class="oi oi-plus"></i></button>
+            </div>
+        </EditForm>
+    }
+</div>

@@ -12,8 +12,7 @@ namespace WorkingTimer.Client.Components
 {
     public partial class Informations : ComponentBase
     {
-        [Parameter]
-        public List<CalendarDay> Days { get; set; }
+        [Parameter] public List<CalendarDay> Days { get; set; }
         [Inject] public HttpClient HttpClient { get; set; }
         [Inject] public AuthenticationStateProvider AuthenticationState { get; set; }
         private List<CalenderEvents> events = new List<CalenderEvents>();

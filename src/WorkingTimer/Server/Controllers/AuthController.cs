@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using WorkingTimer.Server.Services;
 using WorkingTimer.Shared;
 
-
 namespace WorkingTimer.Server.Controllers
 {
     [Route("[controller]")]

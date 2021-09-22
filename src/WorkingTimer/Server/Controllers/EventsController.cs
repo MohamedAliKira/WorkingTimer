@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using WorkingTimer.Server.Services;
 using WorkingTimer.Shared;
-using WorkingTimer.Shared.Response;
 
 namespace WorkingTimer.Server.Controllers
 {
@@ -22,15 +21,12 @@ namespace WorkingTimer.Server.Controllers
             _eventService = eventService;
         }
 
-        // events/NewEvent
-        //[ProducesResponseType(200, Type = typeof(ApiResponse<CalenderEvents>))]
-        //[ProducesResponseType(400, Type = typeof(ApiErrorResponse))]
-        [HttpPost("NewEvent")]
-        public async Task<IActionResult> AddEventAsync([FromBody] CalenderEvents model)
+        [HttpPost("newEvent")]
+        public async Task<IActionResult> PostEventAsync([FromBody] CalenderEvents calenderEvents)
         {
             if (ModelState.IsValid)
             {                
-                var result = await _eventService.AddEventAsync(model);
+                var result = await _eventService.AddEventAsync(calenderEvents);
                 return Ok(result);// new ApiResponse<CalenderEvents>(result, "Event created successfully"));
             }
 
@@ -45,6 +41,18 @@ namespace WorkingTimer.Server.Controllers
             {
                 var result = await _eventService.GetEventsAsync(userId, year, month);
                 return Ok(result); 
+            }
+
+            return BadRequest("Some properties are not valid");  // status code : 400
+        }
+
+        [HttpPut("EditEvent/{Id}")]
+        public async Task<IActionResult> EditEvent([FromQuery] string Id, [FromBody] CalenderEvents calenderEvents)
+        {
+            if (!string.IsNullOrEmpty(Id))
+            {
+                var result = await _eventService.UpdateEventAsync(Id, calenderEvents);
+                return Ok(result);
             }
 
             return BadRequest("Some properties are not valid");  // status code : 400

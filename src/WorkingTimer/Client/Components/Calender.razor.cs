@@ -14,19 +14,16 @@ namespace WorkingTimer.Client.Components
 {
     public partial class Calender : ComponentBase
     {
-        //[Parameter] public EventCallback<CalendarDay> Select_Day { get; set; }
+        
         [Inject] public HttpClient HttpClient { get; set; }
         [Inject] public AuthenticationStateProvider AuthenticationState { get; set; }
-        private AddEvent _myPopup;
         private int year = DateTime.Now.Year;
         private int month = DateTime.Now.Month;
         public List<CalendarDay> days = new List<CalendarDay>();
         private int rowsCount = 0;
 
-        private CalendarDay _jour = new CalendarDay();
-        private bool _isOpened = false;
-
-       private IEnumerable<CalenderEvents> events { get; set; }
+        private CalendarDay selectedDay = new CalendarDay { Date = DateTime.Now };
+        private IEnumerable<CalenderEvents> events { get; set; }
 
         async Task SelectMonth(ChangeEventArgs e)
         {
@@ -86,11 +83,6 @@ namespace WorkingTimer.Client.Components
             else
                 rowsCount = Convert.ToInt32(days.Count / 7) + 1;
 
-
-            AddEvent.OnEventAdd += () =>
-            {
-                StateHasChanged();
-            };
         }
 
         private async Task SynEventsToCalender()
@@ -113,11 +105,5 @@ namespace WorkingTimer.Client.Components
             }
         }
 
-        public void CallPopup(CalendarDay day)
-        {
-            _isOpened = true;
-            _myPopup.Show(day);            
-        }
-       
     }
 }

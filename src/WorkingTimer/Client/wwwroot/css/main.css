@@ -33,9 +33,7 @@ header{
     -webkit-box-shadow: 0px 4px 15px -6px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 4px 15px -6px rgba(0,0,0,0.75);
     box-shadow: 0px 4px 15px -6px rgba(0,0,0,0.75);
-    border: 2px solid #004578;
-    color: #004578;
-    background-color: #c7e0f4 !important;
+    
 }
 
 /* Calender Style */
@@ -152,7 +150,7 @@ header{
 
 
 .information-globale {
-    min-height: 150px;
+    min-height: 100px;
     width: 100%;
     margin: 20px 10px 20px 10px;
     padding: 5px 10px;
@@ -163,7 +161,7 @@ header{
     display: block;
     border: none;
     background-color: #0078d4;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 100;
     color: white;
     -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.36);
@@ -192,6 +190,27 @@ header{
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.36);
 }
 
+.information-event {
+    min-height: 150px;
+    width: 100%;
+    margin: 20px 10px 20px 10px;
+    padding: 5px 10px;
+    text-align: center;
+    vertical-align: central;
+    justify-content: center;
+    justify-items: center;
+    display: block;
+    border: none;
+    background-color: #b48efb;
+    font-size: 18px;
+    font-weight: 100;
+    color: white;
+    margin-top: 10px;
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.36);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.36);
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.36);
+}
+
 .card-auth {
     text-align: center;
     width: auto;
@@ -200,7 +219,7 @@ header{
     justify-content: center;
     justify-items: center;
     border: 1px solid;
-    font-variant: petite-caps;
+    font-variant: small-caps;
     -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.36);
     -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.36);
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.36);
